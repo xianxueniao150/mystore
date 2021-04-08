@@ -1,6 +1,7 @@
 package rabbitmq
 
 import (
+	"fmt"
 	"encoding/json"
 	"github.com/streadway/amqp"
 )
@@ -33,6 +34,15 @@ func New(s string) *RabbitMQ {
 	)
 	if e != nil {
 		panic(e)
+	}
+	err:=ch.ExchangeDeclare("apiServers", "fanout", true, false, false, false, nil)
+	if(err!=nil){
+		fmt.Println(err)
+	}
+
+	err=ch.ExchangeDeclare("dataServers", "fanout", true, false, false, false, nil)
+	if(err!=nil){
+		fmt.Println(err)
 	}
 
 	mq := new(RabbitMQ)
@@ -110,3 +120,4 @@ func (q *RabbitMQ) Close() {
 	q.channel.Close()
 	q.conn.Close()
 }
+

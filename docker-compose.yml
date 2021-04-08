@@ -6,13 +6,25 @@ services:
         # container_name: dataServer
       environment:
         - STORAGE_ROOT=/tmp/1
-        - LISTEN_ADDRESS=:12345
+        - LISTEN_ADDRESS=dataserver:12345
         - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
       restart: always
       # networks: 
       #   mynet: 
       ports: 
-        - 12345:12346
+        - 12345:12345
+      depends_on:
+        - rabbitmq
+    apiserver: 
+      build: 
+          context: .
+          dockerfile: ./Dockerfile.api
+      environment:
+        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
+        - LISTEN_ADDRESS=apiserver:12445
+      restart: always
+      ports: 
+        - 12445:12445
       depends_on:
         - rabbitmq
     rabbitmq:

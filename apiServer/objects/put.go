@@ -8,6 +8,7 @@ import (
 
 func put(w http.ResponseWriter, r *http.Request) {
 	object := strings.Split(r.URL.EscapedPath(), "/")[2]
+	log.Println("start store")
 	c, e := storeObject(r.Body, object)
 	if e != nil {
 		log.Println(e)
