@@ -1,0 +1,7 @@
+FROM rabbitmq:management 
+
+RUN rabbitmq-server -detached
+RUN sleep 10s
+RUN rabbitmqctl add_user root 123
+RUN rabbitmqctl set_permissions -p / root ".*" ".*" ".*"
+CMD echo "rabbitmq start success"

@@ -1,0 +1,29 @@
+version: '3.3'
+services: 
+    dataserver: 
+      build: .
+        # image: golang:alpine
+        # container_name: dataServer
+      environment:
+        - STORAGE_ROOT=/tmp/1
+        - LISTEN_ADDRESS=:12345
+        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
+      restart: always
+      # networks: 
+      #   mynet: 
+      ports: 
+        - 12345:12346
+      depends_on:
+        - rabbitmq
+    rabbitmq:
+        image: rabbitmq:management 
+          # context: .
+          # dockerfile: ./Dockerfile.rabb
+        restart: always
+        # networks: 
+        #   mynet: 
+        ports: 
+          - 5672:5672
+          - 15672:15672
+# networks:  #关于网络的服务
+#   mynet:   #声明网络mynet

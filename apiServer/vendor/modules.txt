@@ -1,0 +1,8 @@
+# github.com/streadway/amqp v1.0.0
+## explicit
+github.com/streadway/amqp
+# utils v0.0.0 => ../utils
+## explicit
+utils/objectstream
+utils/rabbitmq
+# utils => ../utils
