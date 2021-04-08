@@ -1,20 +1,11 @@
-FROM golang:alpine 
+FROM ubuntu:18.04
 
-ENV GO111MODULE=on \
-    CGO_ENABLED=0 \
-    GOOS=linux \
-    GOARCH=amd64 
-
-WORKDIR /go/src/app
-
+WORKDIR  /app
 # 将代码复制到容器中
-COPY ./apiServer .
-
-# 将我们的代码编译成二进制可执行文件app
-RUN go build -o apiServer .
+COPY ./apiServer/apiServer .
 
 # 声明服务端口
-EXPOSE 12446
+EXPOSE 12445
 
 # 启动容器时运行的命令
-CMD ["/go/src/app/apiServer"]
+CMD ["./apiServer"]

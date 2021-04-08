@@ -1,7 +1,7 @@
 package locate
 
 import (
-	"utils/rabbitmq"
+	"mystore/utils/rabbitmq"
 	"os"
 	"strconv"
 )

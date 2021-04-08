@@ -1,9 +1,9 @@
 package objects
 
 import (
-	"apiServer/heartbeat"
+	"mystore/apiServer/heartbeat"
 	"fmt"
-	"utils/objectstream"
+	"mystore/utils/objectstream"
 )
 
 func putStream(object string) (*objectstream.PutStream, error) {

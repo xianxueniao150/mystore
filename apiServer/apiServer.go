@@ -1,9 +1,9 @@
 package main
 
 import (
-	"apiServer/heartbeat"
-	"apiServer/locate"
-	"apiServer/objects"
+	"mystore/apiServer/heartbeat"
+	"mystore/apiServer/locate"
+	"mystore/apiServer/objects"
 	"log"
 	"net/http"
 	"os"

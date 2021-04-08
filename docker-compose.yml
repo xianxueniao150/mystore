@@ -1,20 +1,57 @@
 version: '3.3'
 services: 
     dataserver: 
-      build: .
-        # image: golang:alpine
-        # container_name: dataServer
+      build: 
+          context: .
+          dockerfile: ./Dockerfile.data
       environment:
         - STORAGE_ROOT=/tmp/1
         - LISTEN_ADDRESS=dataserver:12345
         - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
       restart: always
-      # networks: 
-      #   mynet: 
       ports: 
         - 12345:12345
       depends_on:
-        - rabbitmq
+        - rabbitmq  
+    dataserver2: 
+      build: 
+          context: .
+          dockerfile: ./Dockerfile.data
+      environment:
+        - STORAGE_ROOT=/tmp/1
+        - LISTEN_ADDRESS=dataserver2:12345
+        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
+      restart: always
+      ports: 
+        - 12346:12345
+      depends_on:
+        - rabbitmq 
+    dataserver3: 
+      build: 
+          context: .
+          dockerfile: ./Dockerfile.data
+      environment:
+        - STORAGE_ROOT=/tmp/1
+        - LISTEN_ADDRESS=dataserver3:12345
+        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
+      restart: always
+      ports: 
+        - 12347:12345
+      depends_on:
+        - rabbitmq 
+    dataserver4: 
+      build: 
+          context: .
+          dockerfile: ./Dockerfile.data
+      environment:
+        - STORAGE_ROOT=/tmp/1
+        - LISTEN_ADDRESS=dataserver4:12345
+        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
+      restart: always
+      ports: 
+        - 12348:12345
+      depends_on:
+        - rabbitmq 
     apiserver: 
       build: 
           context: .
@@ -25,6 +62,18 @@ services:
       restart: always
       ports: 
         - 12445:12445
+      depends_on:
+        - rabbitmq
+    apiserver2: 
+      build: 
+          context: .
+          dockerfile: ./Dockerfile.api
+      environment:
+        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
+        - LISTEN_ADDRESS=apiserver2:12445
+      restart: always
+      ports: 
+        - 12446:12445
       depends_on:
         - rabbitmq
     rabbitmq:

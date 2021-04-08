@@ -1,7 +1,7 @@
 package heartbeat
 
 import (
-	"utils/rabbitmq"
+	"mystore/utils/rabbitmq"
 	"os"
 	"strconv"
 	"sync"

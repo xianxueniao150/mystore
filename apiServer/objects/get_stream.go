@@ -1,10 +1,10 @@
 package objects
 
 import (
-	"apiServer/locate"
+	"mystore/apiServer/locate"
 	"fmt"
 	"io"
-	"utils/objectstream"
+	"mystore/utils/objectstream"
 )
 
 func getStream(object string) (io.Reader, error) {

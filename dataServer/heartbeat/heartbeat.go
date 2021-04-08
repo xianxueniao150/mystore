@@ -3,7 +3,7 @@ package heartbeat
 import (
 	"os"
 	"time"
-	"utils/rabbitmq"
+	"mystore/utils/rabbitmq"
 )
 
 func StartHeartbeat() {

@@ -1,0 +1,11 @@
+FROM ubuntu:18.04
+
+WORKDIR  /app
+# 将代码复制到容器中
+COPY ./dataServer/dataServer . 
+
+# 声明服务端口
+EXPOSE 12345
+
+# 启动容器时运行的命令
+CMD ["./dataServer"]
