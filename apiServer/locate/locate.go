@@ -1,8 +1,6 @@
 package locate
 
 import (
-	"fmt"
-	"log"
 	"mystore/utils/rabbitmq"
 	"os"
 	"strconv"
@@ -19,8 +17,6 @@ func Locate(name string) string {
 	}()
 	msg := <-c
 	s, _ := strconv.Unquote(string(msg.Body))
-	fmt.Printf("locate:%s",s)
-	log.Printf("log:locate:%s",s)
 	return s
 }
 

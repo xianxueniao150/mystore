@@ -1,19 +1,22 @@
 package main
 
 import (
+	"log"
 	"mystore/dataServer/heartbeat"
 	"mystore/dataServer/locate"
 	"mystore/dataServer/objects"
-	"log"
+	"mystore/dataServer/temp"
 	"net/http"
 	"os"
 )
 
 func main() {
 	log.SetFlags(log.Lshortfile | log.Ltime)
+	locate.CollectObjects()
 	go heartbeat.StartHeartbeat()
 	go locate.StartLocate()
 	http.HandleFunc("/objects/", objects.Handler)
-    log.Println("启动成功")
+	http.HandleFunc("/temp/", temp.Handler)
 	log.Fatal(http.ListenAndServe(os.Getenv("LISTEN_ADDRESS"), nil))
 }
+

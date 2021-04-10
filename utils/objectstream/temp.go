@@ -12,8 +12,8 @@ type TempPutStream struct {
 	Uuid   string
 }
 
-func NewTempPutStream(server, object string, size int64) (*TempPutStream, error) {
-	request, e := http.NewRequest("POST", "http://"+server+"/temp/"+object, nil)
+func NewTempPutStream(server, hash string, size int64) (*TempPutStream, error) {
+	request, e := http.NewRequest("POST", "http://"+server+"/temp/"+hash, nil)
 	if e != nil {
 		return nil, e
 	}
