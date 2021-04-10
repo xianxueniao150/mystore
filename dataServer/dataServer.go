@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.Lshortfile | log.Ltime)
 	go heartbeat.StartHeartbeat()
 	go locate.StartLocate()
 	http.HandleFunc("/objects/", objects.Handler)

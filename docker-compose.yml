@@ -26,32 +26,32 @@ services:
         - 12346:12345
       depends_on:
         - rabbitmq 
-    dataserver3: 
-      build: 
-          context: .
-          dockerfile: ./Dockerfile.data
-      environment:
-        - STORAGE_ROOT=/tmp/1
-        - LISTEN_ADDRESS=dataserver3:12345
-        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
-      restart: always
-      ports: 
-        - 12347:12345
-      depends_on:
-        - rabbitmq 
-    dataserver4: 
-      build: 
-          context: .
-          dockerfile: ./Dockerfile.data
-      environment:
-        - STORAGE_ROOT=/tmp/1
-        - LISTEN_ADDRESS=dataserver4:12345
-        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
-      restart: always
-      ports: 
-        - 12348:12345
-      depends_on:
-        - rabbitmq 
+    # dataserver3: 
+    #   build: 
+    #       context: .
+    #       dockerfile: ./Dockerfile.data
+    #   environment:
+    #     - STORAGE_ROOT=/tmp/1
+    #     - LISTEN_ADDRESS=dataserver3:12345
+    #     - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
+    #   restart: always
+    #   ports: 
+    #     - 12347:12345
+    #   depends_on:
+    #     - rabbitmq 
+    # dataserver4: 
+    #   build: 
+    #       context: .
+    #       dockerfile: ./Dockerfile.data
+    #   environment:
+    #     - STORAGE_ROOT=/tmp/1
+    #     - LISTEN_ADDRESS=dataserver4:12345
+    #     - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
+    #   restart: always
+    #   ports: 
+    #     - 12348:12345
+    #   depends_on:
+        # - rabbitmq 
     apiserver: 
       build: 
           context: .
@@ -59,6 +59,7 @@ services:
       environment:
         - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
         - LISTEN_ADDRESS=apiserver:12445
+        - ES_SERVER=elasticsearch:9200
       restart: always
       ports: 
         - 12445:12445
@@ -71,6 +72,7 @@ services:
       environment:
         - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
         - LISTEN_ADDRESS=apiserver2:12445
+        - ES_SERVER=elasticsearch:9200
       restart: always
       ports: 
         - 12446:12445
@@ -78,13 +80,15 @@ services:
         - rabbitmq
     rabbitmq:
         image: rabbitmq:management 
-          # context: .
-          # dockerfile: ./Dockerfile.rabb
         restart: always
-        # networks: 
-        #   mynet: 
         ports: 
           - 5672:5672
           - 15672:15672
-# networks:  #关于网络的服务
-#   mynet:   #声明网络mynet
+    elasticsearch:
+        image: elasticsearch:7.12.0
+        environment:
+          - discovery.type=single-node
+        ports:
+          - 9200:9200
+          - 9300:9300
+ 

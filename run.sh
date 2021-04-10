@@ -1,6 +1,5 @@
 docker-compose rm -f
-docker image rm -f mystore_apiserver
-docker image rm -f mystore_dataserver
+docker image rm -f $(docker image ls -q mystore*)
 
 cd apiServer/
 go build apiServer.go

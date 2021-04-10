@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -29,7 +30,7 @@ type searchResult struct {
 }
 
 func getMetadata(name string, versionId int) (meta Metadata, e error) {
-	url := fmt.Sprintf("http://%s/metadata/objects/%s_%d/_source",
+	url := fmt.Sprintf("http://%s/metadata/_doc/%s_%d/_source",
 		os.Getenv("ES_SERVER"), name, versionId)
 	r, e := http.Get(url)
 	if e != nil {
@@ -41,6 +42,7 @@ func getMetadata(name string, versionId int) (meta Metadata, e error) {
 	}
 	result, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(result, &meta)
+	log.Printf("meta:%v",meta)
 	return
 }
 
@@ -75,15 +77,16 @@ func PutMetadata(name string, version int, size int64, hash string) error {
 	doc := fmt.Sprintf(`{"name":"%s","version":%d,"size":%d,"hash":"%s"}`,
 		name, version, size, hash)
 	client := http.Client{}
-	url := fmt.Sprintf("http://%s/metadata/objects/%s_%d?op_type=create",
+	url := fmt.Sprintf("http://%s/metadata/_doc/%s_%d?op_type=create",
 		os.Getenv("ES_SERVER"), name, version)
 	request, _ := http.NewRequest("PUT", url, strings.NewReader(doc))
+	request.Header.Add("Content-Type","application/json")
 	r, e := client.Do(request)
 	if e != nil {
 		return e
 	}
 	if r.StatusCode == http.StatusConflict {
-		return PutMetadata(name, version+1, size, hash)
+		return PutMetadata(name, version+1, size, hash) //如果同时有其他客户端上传导致版本冲突，这里就重新上传
 	}
 	if r.StatusCode != http.StatusCreated {
 		result, _ := ioutil.ReadAll(r.Body)
@@ -122,7 +125,7 @@ func SearchAllVersions(name string, from, size int) ([]Metadata, error) {
 
 func DelMetadata(name string, version int) {
 	client := http.Client{}
-	url := fmt.Sprintf("http://%s/metadata/objects/%s_%d",
+	url := fmt.Sprintf("http://%s/metadata/%s_%d",
 		os.Getenv("ES_SERVER"), name, version)
 	request, _ := http.NewRequest("DELETE", url, nil)
 	client.Do(request)
