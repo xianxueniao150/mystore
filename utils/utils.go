@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -46,4 +47,10 @@ func CalculateHash(r io.Reader) string {
 		fmt.Printf("err:%v",err)
 	}
 	return base64.StdEncoding.EncodeToString(h.Sum(nil))
+}
+
+func PrintError(err error){
+	if err != nil {
+		log.Printf("err:%v",err)
+	}
 }

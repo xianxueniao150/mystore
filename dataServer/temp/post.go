@@ -37,7 +37,6 @@ func post(w http.ResponseWriter, r *http.Request) {
 }
 
 func (t *tempInfo) writeToFile() error {
-	os.MkdirAll(os.Getenv("STORAGE_ROOT") + "/temp/", 0777)
 	f, e := os.Create(os.Getenv("STORAGE_ROOT") + "/temp/" + t.Uuid)
 	if e != nil {
 		return e

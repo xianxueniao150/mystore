@@ -3,6 +3,7 @@ package objects
 import (
 	"fmt"
 	"io"
+	"log"
 	"mystore/apiServer/locate"
 	"mystore/utils"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 )
 
 func storeObject(r io.Reader, hash string, size int64) (int, error) {
+	log.Printf("enter store;size:%d",size)
 	if locate.Exist(url.PathEscape(hash)) {
 		return http.StatusOK, nil
 	}
@@ -21,7 +23,6 @@ func storeObject(r io.Reader, hash string, size int64) (int, error) {
 
 	reader := io.TeeReader(r, stream)
 	d := utils.CalculateHash(reader)
-	fmt.Println("stream:%v",stream)
 	if d != hash {
 		stream.Commit(false)
 		return http.StatusBadRequest, fmt.Errorf("object hash mismatch, calculated=%s, requested=%s", d, hash)

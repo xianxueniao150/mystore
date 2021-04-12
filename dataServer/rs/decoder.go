@@ -9,7 +9,7 @@ type decoder struct {
 	readers   []io.Reader
 	writers   []io.Writer
 	enc       reedsolomon.Encoder
-	size      int64
+	size      int64  //对象大小
 	cache     []byte
 	cacheSize int
 	total     int64
@@ -56,6 +56,7 @@ func (d *decoder) getData() error {
 			}
 		}
 	}
+	//修复被损坏的数据
 	e := d.enc.Reconstruct(shards)
 	if e != nil {
 		return e
@@ -66,6 +67,7 @@ func (d *decoder) getData() error {
 	}
 	for i := 0; i < DATA_SHARDS; i++ {
 		shardSize := int64(len(shards[i]))
+		//RS码要求每一个数据片的长度完全一样，所以在编码时最后一个数据片可能会被填充，在解码时要去掉填充部分
 		if d.total+shardSize > d.size {
 			shardSize -= d.total + shardSize - d.size
 		}

@@ -1,8 +1,10 @@
 package rs
 
 import (
-	"github.com/klauspost/reedsolomon"
 	"io"
+	"mystore/utils"
+
+	"github.com/klauspost/reedsolomon"
 )
 
 type encoder struct {
@@ -41,7 +43,8 @@ func (e *encoder) Flush() {
 	shards, _ := e.enc.Split(e.cache)
 	e.enc.Encode(shards)
 	for i := range shards {
-		e.writers[i].Write(shards[i])
+		_,err:=e.writers[i].Write(shards[i])
+		utils.PrintError(err)
 	}
 	e.cache = []byte{}
 }

@@ -1,57 +1,53 @@
 version: '3.3'
 services: 
     dataserver: 
-      build: 
-          context: .
-          dockerfile: ./Dockerfile.data
+      extends: 
+        file: common-services.yml
+        service: webapp
       environment:
-        - STORAGE_ROOT=/tmp/1
         - LISTEN_ADDRESS=dataserver:12345
-        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
-      restart: always
       ports: 
         - 12345:12345
-      depends_on:
-        - rabbitmq  
     dataserver2: 
-      build: 
-          context: .
-          dockerfile: ./Dockerfile.data
+      extends: 
+        file: common-services.yml
+        service: webapp
       environment:
-        - STORAGE_ROOT=/tmp/1
         - LISTEN_ADDRESS=dataserver2:12345
-        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
-      restart: always
       ports: 
         - 12346:12345
-      depends_on:
-        - rabbitmq 
-    # dataserver3: 
-    #   build: 
-    #       context: .
-    #       dockerfile: ./Dockerfile.data
-    #   environment:
-    #     - STORAGE_ROOT=/tmp/1
-    #     - LISTEN_ADDRESS=dataserver3:12345
-    #     - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
-    #   restart: always
-    #   ports: 
-    #     - 12347:12345
-    #   depends_on:
-    #     - rabbitmq 
-    # dataserver4: 
-    #   build: 
-    #       context: .
-    #       dockerfile: ./Dockerfile.data
-    #   environment:
-    #     - STORAGE_ROOT=/tmp/1
-    #     - LISTEN_ADDRESS=dataserver4:12345
-    #     - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
-    #   restart: always
-    #   ports: 
-    #     - 12348:12345
-    #   depends_on:
-        # - rabbitmq 
+    dataserver3: 
+      extends: 
+        file: common-services.yml
+        service: webapp
+      environment:
+        - LISTEN_ADDRESS=dataserver3:12345
+      ports: 
+        - 12347:12345
+    dataserver4: 
+      extends: 
+        file: common-services.yml
+        service: webapp
+      environment:
+        - LISTEN_ADDRESS=dataserver4:12345
+      ports: 
+        - 12348:12345
+    dataserver5: 
+      extends: 
+        file: common-services.yml
+        service: webapp
+      environment:
+        - LISTEN_ADDRESS=dataserver5:12345
+      ports: 
+        - 12349:12345
+    dataserver6: 
+      extends: 
+        file: common-services.yml
+        service: webapp
+      environment:
+        - LISTEN_ADDRESS=dataserver6:12345
+      ports: 
+        - 12350:12345
     apiserver: 
       build: 
           context: .

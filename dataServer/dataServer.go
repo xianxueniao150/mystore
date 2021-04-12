@@ -12,6 +12,8 @@ import (
 
 func main() {
 	log.SetFlags(log.Lshortfile | log.Ltime)
+	os.MkdirAll(os.Getenv("STORAGE_ROOT") + "/temp/", 0777)
+	os.MkdirAll(os.Getenv("STORAGE_ROOT") + "/objects/", 0777)
 	locate.CollectObjects()
 	go heartbeat.StartHeartbeat()
 	go locate.StartLocate()

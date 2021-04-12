@@ -1,0 +1,9 @@
+services: 
+    webapp: 
+      build: 
+          context: .
+          dockerfile: ./Dockerfile.data
+      environment:
+        - STORAGE_ROOT=/store
+        - RABBITMQ_SERVER=amqp://guest:guest@rabbitmq:5672
+      restart: always

@@ -24,6 +24,7 @@ func NewRSGetStream(locateInfo map[int]string, dataServers []string, hash string
 			continue
 		}
 		reader, e := objectstream.NewGetStream(server, fmt.Sprintf("%s.%d", hash, i))
+		//e为空，可能处于以下原因 1.该分片数据服务节点地址为空 2.数据服务节点存在但打开流失败
 		if e == nil {
 			readers[i] = reader
 		}

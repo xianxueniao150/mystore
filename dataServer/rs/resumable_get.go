@@ -2,7 +2,7 @@ package rs
 
 import (
 	"io"
-	"mystore/utils//objectstream"
+	"mystore/utils/objectstream"
 )
 
 type RSResumableGetStream struct {
