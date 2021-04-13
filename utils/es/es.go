@@ -133,9 +133,9 @@ func DelMetadata(name string, version int) {
 
 type Bucket struct {
 	Key         string
-	Doc_count   int
+	Doc_count   int //表示该对象目前有多少个版本
 	Min_version struct {
-		Value float32
+		Value float32 //表示对象当前最小的版本号
 	}
 }
 
