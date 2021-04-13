@@ -12,6 +12,7 @@ import (
 )
 
 func GetOffsetFromHeader(h http.Header) int64 {
+	//range头部的格式为 "bytes=<first>-"
 	byteRange := h.Get("range")
 	if len(byteRange) < 7 {
 		return 0

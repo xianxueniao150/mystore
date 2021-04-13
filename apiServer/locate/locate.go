@@ -2,7 +2,7 @@ package locate
 
 import (
 	"encoding/json"
-	"mystore/dataServer/rs"
+	"mystore/utils/rs"
 	"mystore/utils/rabbitmq"
 	"mystore/utils/types"
 	"os"

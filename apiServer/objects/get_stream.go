@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"mystore/apiServer/heartbeat"
 	"mystore/apiServer/locate"
-	"mystore/dataServer/rs"
+	"mystore/utils/rs"
 )
 
 func GetStream(hash string, size int64) (*rs.RSGetStream, error) {

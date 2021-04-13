@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 	"mystore/apiServer/heartbeat"
-	"mystore/dataServer/rs"
+	"mystore/utils/rs"
 )
 
 func putStream(hash string, size int64) (*rs.RSPutStream, error) {
