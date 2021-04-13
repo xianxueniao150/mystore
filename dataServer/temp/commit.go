@@ -1,6 +1,8 @@
 package temp
 
 import (
+	"compress/gzip"
+	"io"
 	"mystore/dataServer/locate"
 	"mystore/utils"
 	"net/url"
@@ -23,9 +25,14 @@ func (t *tempInfo) id() int {
 
 func commitTempObject(datFile string, tempinfo *tempInfo) {
 	f, _ := os.Open(datFile)
+	defer f.Close()
 	d := url.PathEscape(utils.CalculateHash(f))
-	f.Close()
-	err:=os.Rename(datFile, os.Getenv("STORAGE_ROOT")+"/objects/"+tempinfo.Name+"."+d)
-	utils.PrintError(err)
+	f.Seek(0, io.SeekStart)
+	w, _ := os.Create(os.Getenv("STORAGE_ROOT") + "/objects/" + tempinfo.Name + "." + d)
+	w2 := gzip.NewWriter(w)
+	io.Copy(w2, f)
+	w2.Close()
+	os.Remove(datFile)
 	locate.Add(tempinfo.hash(), tempinfo.id())
 }
+
